@@ -11,21 +11,13 @@ public class Pr05TransportPrice {
         boolean isDay = "day".equals(scanner.nextLine().trim().toLowerCase());
 
         double transportPrice = 0d;
-
-        double pricePerKm;
+        double pricePerKm = 0.06d;
 
         if (distance < 20d) {
             transportPrice += 0.7d;
-
-            if (isDay) {
-                pricePerKm = 0.79d;
-            } else {
-                pricePerKm = 0.9d;
-            }
+            pricePerKm = isDay ? 0.79d : 0.9d;
         } else if (distance < 100d) {
             pricePerKm = 0.09d;
-        } else {
-            pricePerKm = 0.06d;
         }
 
         transportPrice += distance * pricePerKm;
