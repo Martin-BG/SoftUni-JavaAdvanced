@@ -10,7 +10,7 @@
 **/out/
 .idea
 *.iws
-*.iml
+#*.iml
 *.ipr
 
 # Prerequisites
