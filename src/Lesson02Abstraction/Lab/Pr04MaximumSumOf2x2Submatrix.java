@@ -19,10 +19,10 @@ public class Pr04MaximumSumOf2x2Submatrix {
         int[][] matrix = new int[rows][cols];
 
         for (int row = 0; row < rows; row++) {
-            int[] numbers = Arrays.stream(reader.readLine().split(", "))
-                    .mapToInt(Integer::parseInt).toArray();
-
-            System.arraycopy(numbers, 0, matrix[row], 0, cols);
+            matrix[row] = Arrays
+                    .stream(reader.readLine().split(", "))
+                    .mapToInt(Integer::parseInt)
+                    .toArray();
         }
 
         long maxSum = Long.MIN_VALUE;
