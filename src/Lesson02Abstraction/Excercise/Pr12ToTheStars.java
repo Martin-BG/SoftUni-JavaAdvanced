@@ -12,13 +12,13 @@ public class Pr12ToTheStars {
 
         Scanner scanner = new Scanner(System.in);
 
-        String[] tokens = scanner.nextLine().toLowerCase().split("\\s+");
+        String[] tokens = scanner.nextLine().split("\\s+");
 
         while (tokens.length > 2) {
 
             galaxy.add(new StarSystem(tokens[0], Double.parseDouble(tokens[1]), Double.parseDouble(tokens[2])));
 
-            tokens = scanner.nextLine().toLowerCase().split("\\s+");
+            tokens = scanner.nextLine().split("\\s+");
         }
 
         double currX = Double.parseDouble(tokens[0]);
@@ -57,7 +57,7 @@ public class Pr12ToTheStars {
         }
 
         String getName() {
-            return name;
+            return this.name;
         }
 
         boolean isWithin(double x, double y) {
