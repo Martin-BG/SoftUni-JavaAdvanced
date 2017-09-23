@@ -1,4 +1,4 @@
-package Lesson01IntroToJava.Excercise;
+package Lesson01IntroToJava.Exercise;
 
 import java.io.BufferedReader;
 import java.io.IOException;

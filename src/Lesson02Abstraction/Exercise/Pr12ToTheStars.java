@@ -1,4 +1,4 @@
-package Lesson02Abstraction.Excercise;
+package Lesson02Abstraction.Exercise;
 
 import java.util.LinkedList;
 import java.util.List;

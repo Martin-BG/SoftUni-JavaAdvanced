@@ -1,4 +1,4 @@
-package Lesson02Abstraction.Excercise;
+package Lesson02Abstraction.Exercise;
 
 import java.util.ArrayList;
 import java.util.Arrays;

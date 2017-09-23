@@ -1,4 +1,4 @@
-package Lesson02Abstraction.Excercise;
+package Lesson02Abstraction.Exercise;
 
 import java.io.BufferedReader;
 import java.io.IOException;
