@@ -16,27 +16,30 @@ public class Pr12ToTheStars {
 
         while (tokens.length > 2) {
 
-            galaxy.add(new StarSystem(tokens[0], Double.parseDouble(tokens[1]), Double.parseDouble(tokens[2])));
+            String name = tokens[0];
+            double x = Double.parseDouble(tokens[1]);
+            double y = Double.parseDouble(tokens[2]);
+            galaxy.add(new StarSystem(name, x, y));
 
             tokens = scanner.nextLine().split("\\s+");
         }
 
-        double currX = Double.parseDouble(tokens[0]);
-        double currY = Double.parseDouble(tokens[1]);
-        int moves = scanner.nextInt();
+        double shipX = Double.parseDouble(tokens[0]);
+        double shipY = Double.parseDouble(tokens[1]);
+        int shipMoves = scanner.nextInt();
 
-        while (moves-- >= 0) {
+        while (shipMoves-- >= 0) {
             boolean inStarSystem = false;
 
             for (StarSystem starSystem : galaxy) {
-                if (starSystem.isWithin(currX, currY)) {
+                if (starSystem.isWithin(shipX, shipY)) {
                     System.out.println(starSystem.getName());
                     inStarSystem = true;
                     break;
                 }
             }
 
-            currY++;
+            shipY++;
 
             if (!inStarSystem) {
                 System.out.println("space");
@@ -61,7 +64,8 @@ public class Pr12ToTheStars {
         }
 
         boolean isWithin(double x, double y) {
-            return x >= this.x && x <= this.x + 2d && y >= this.y && y <= this.y + 2d;
+            return x >= this.x && x <= this.x + 2d &&
+                    y >= this.y && y <= this.y + 2d;
         }
     }
 }
