@@ -1,5 +1,7 @@
 package Lesson03StringProcessing.Lab;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -13,6 +15,8 @@ public class Pr07ValidUsernames {
         Pattern pattern = Pattern.compile("^[\\w-]{3,16}$");
         Matcher matcher;
 
+        List<String> results = new ArrayList<>();
+
         while (true) {
             String line = scanner.nextLine();
 
@@ -22,7 +26,13 @@ public class Pr07ValidUsernames {
 
             matcher = pattern.matcher(line);
 
-            System.out.println(matcher.find() ? "valid" : "invalid");
+            results.add(matcher.find() ? "valid" : "invalid");
+        }
+
+        if (results.contains("valid")) {
+            for (String result : results) {
+                System.out.println(result);
+            }
         }
     }
 }
