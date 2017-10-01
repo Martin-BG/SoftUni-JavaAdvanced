@@ -24,34 +24,34 @@ public class Pr07CollectTheCoins {
 
         for (char command : commands) {
             switch (command) {
-                case '>':
-                    if (currentCol < board[currentRow].length - 1) {
-                        currentCol++;
-                    } else {
-                        wallHits++;
-                    }
-                    break;
-                case '<':
-                    if (currentCol > 0) {
-                        currentCol--;
-                    } else {
-                        wallHits++;
-                    }
-                    break;
-                case 'V':
-                    if (currentRow + 1 < 4 && currentCol < board[currentRow + 1].length) {
-                        currentRow++;
-                    } else {
-                        wallHits++;
-                    }
-                    break;
-                case '^':
-                    if (currentRow - 1 >= 0 && currentCol < board[currentRow - 1].length) {
-                        currentRow--;
-                    } else {
-                        wallHits++;
-                    }
-                    break;
+            case '>':
+                if (currentCol < board[currentRow].length - 1) {
+                    currentCol++;
+                } else {
+                    wallHits++;
+                }
+                break;
+            case '<':
+                if (currentCol > 0) {
+                    currentCol--;
+                } else {
+                    wallHits++;
+                }
+                break;
+            case 'V':
+                if (currentRow + 1 < 4 && currentCol < board[currentRow + 1].length) {
+                    currentRow++;
+                } else {
+                    wallHits++;
+                }
+                break;
+            case '^':
+                if (currentRow - 1 >= 0 && currentCol < board[currentRow - 1].length) {
+                    currentRow--;
+                } else {
+                    wallHits++;
+                }
+                break;
             }
 
             if (board[currentRow][currentCol] == '$') {

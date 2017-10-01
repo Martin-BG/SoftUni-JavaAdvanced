@@ -35,15 +35,15 @@ public class Pr09ByteParty {
         int position = Integer.parseInt(tokens[1]);
 
         switch (command) {
-            case -1:
-                flipBitAtPosition(numbers, position);
-                break;
-            case 1:
-                setBitAtPosition(numbers, position);
-                break;
-            case 0:
-                clearBitAtPosition(numbers, position);
-                break;
+        case -1:
+            flipBitAtPosition(numbers, position);
+            break;
+        case 1:
+            setBitAtPosition(numbers, position);
+            break;
+        case 0:
+            clearBitAtPosition(numbers, position);
+            break;
         }
     }
 

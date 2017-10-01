@@ -17,20 +17,20 @@ public class Pr04SeriesOfLetters {
 
         for (char curr : input) {
             switch (state) {
-                case 0: // Initial state
+            case 0: // Initial state
+                state = 1;
+                break;
+            case 1: // Found a new letter
+                sb.append(prev);
+                if (curr == prev) {
+                    state = 2;
+                }
+                break;
+            case 2: // Found the same letter
+                if (curr != prev) {
                     state = 1;
-                    break;
-                case 1: // Found a new letter
-                    sb.append(prev);
-                    if (curr == prev) {
-                        state = 2;
-                    }
-                    break;
-                case 2: // Found the same letter
-                    if (curr != prev) {
-                        state = 1;
-                    }
-                    break;
+                }
+                break;
             }
 
             prev = curr;

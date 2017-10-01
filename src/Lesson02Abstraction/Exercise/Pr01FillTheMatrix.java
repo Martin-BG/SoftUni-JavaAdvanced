@@ -22,14 +22,14 @@ public class Pr01FillTheMatrix {
         int[][] matrix = new int[size][size];
 
         switch (pattern) {
-            case 'A':
-                patternA(matrix);
-                break;
-            case 'B':
-                patternB(matrix);
-                break;
-            default:
-                break;
+        case 'A':
+            patternA(matrix);
+            break;
+        case 'B':
+            patternB(matrix);
+            break;
+        default:
+            break;
         }
 
         return matrix;

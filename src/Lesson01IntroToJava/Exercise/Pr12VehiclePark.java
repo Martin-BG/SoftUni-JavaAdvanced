@@ -67,18 +67,18 @@ public class Pr12VehiclePark {
         VehicleType type;
 
         switch (vehicleSignature.toLowerCase().charAt(0)) {
-            case 'c':
-                type = VehicleType.CAR;
-                break;
-            case 'v':
-                type = VehicleType.VAN;
-                break;
-            case 'b':
-                type = VehicleType.BUS;
-                break;
-            default:
-                type = VehicleType.CAR;
-                break;
+        case 'c':
+            type = VehicleType.CAR;
+            break;
+        case 'v':
+            type = VehicleType.VAN;
+            break;
+        case 'b':
+            type = VehicleType.BUS;
+            break;
+        default:
+            type = VehicleType.CAR;
+            break;
         }
 
         return type;
