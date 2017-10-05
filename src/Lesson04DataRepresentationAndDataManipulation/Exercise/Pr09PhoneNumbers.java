@@ -18,18 +18,18 @@ public class Pr09PhoneNumbers {
             line = reader.readLine();
         }
 
-        String regex = "(([A-Z][A-Za-z]*)[^A-Za-z0-9+]*(\\+?[0-9][0-9()/.\\- ]+))";
+        String regex = "((?<name>[A-Z][A-Za-z]*)[^A-Za-z0-9+]*(?<number>\\+?[0-9][0-9()/.\\- ]+))";
         Matcher matcher = Pattern.compile(regex).matcher(sb.toString());
 
         boolean found = false;
         sb.setLength(0);
         sb.append("<ol>");
         while (matcher.find()) {
-            String number = matcher.group(3).replaceAll("[()/.\\- ]", "");
+            String number = matcher.group("number").replaceAll("[()/.\\- ]", "");
             if (number.length() < 3 && number.startsWith("+")) {
                 continue;
             }
-            sb.append("<li><b>").append(matcher.group(2)).append(":</b> ").append(number).append("</li>");
+            sb.append("<li><b>").append(matcher.group("name")).append(":</b> ").append(number).append("</li>");
             found = true;
         }
         sb.append("</ol>");
