@@ -26,11 +26,11 @@ public class Pr04TruckTourAlgorithmsTest {
         evaluateStartIndexLinearAlgorithm(pumpsCount, fuelPumps);
         System.out.println();
 
-        evaluateStartIndexQuadraticAlgorithm(pumpsCount, fuelPumpsQueue);
+        evaluateStartIndexQuadraticAlgorithm(fuelPumpsQueue);
         System.out.println();
     }
 
-    private static void evaluateStartIndexQuadraticAlgorithm(int pumpsCount, Deque<Integer> fuelPumpsQueue) {
+    private static void evaluateStartIndexQuadraticAlgorithm(Deque<Integer> fuelPumpsQueue) {
         System.out.println("Quadratic Algorithm (queue)...");
         long counter = 0L;
         int startIndex = 0;
