@@ -23,14 +23,14 @@ public class Pr04TruckTourAlgorithmsTest {
         System.out.println("Number of elements (fuel pumps): " + pumpsCount);
         System.out.println();
 
-        getStartIndexLinearAlgorithm(pumpsCount, fuelPumps);
+        evaluateStartIndexLinearAlgorithm(pumpsCount, fuelPumps);
         System.out.println();
 
-        getStartIndexQuadraticAlgorithm(pumpsCount, fuelPumpsQueue);
+        evaluateStartIndexQuadraticAlgorithm(pumpsCount, fuelPumpsQueue);
         System.out.println();
     }
 
-    private static void getStartIndexQuadraticAlgorithm(int pumpsCount, Deque<Integer> fuelPumpsQueue) {
+    private static void evaluateStartIndexQuadraticAlgorithm(int pumpsCount, Deque<Integer> fuelPumpsQueue) {
         System.out.println("Quadratic Algorithm (queue)...");
         long counter = 0L;
         int startIndex = 0;
@@ -64,7 +64,7 @@ public class Pr04TruckTourAlgorithmsTest {
         System.out.println("Start index: " + startIndex);
     }
 
-    private static void getStartIndexLinearAlgorithm(int pumpsCount, int[] fuelPumps) {
+    private static void evaluateStartIndexLinearAlgorithm(int pumpsCount, int[] fuelPumps) {
         System.out.println("Linear Algorithm (array)...");
         long counter = 0L;
         int startIndex = 0;
