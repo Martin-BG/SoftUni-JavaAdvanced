@@ -1,12 +1,11 @@
 package Lesson05ObjectsClassesAndAPIs.Exercise;
 
-import java.io.IOException;
 import java.util.ArrayDeque;
 import java.util.Deque;
 
 public class Pr04TruckTourAlgorithmsTest {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         int pumpsCount = 10000 + 2;
         int[] fuelPumps = new int[pumpsCount];
         Deque<Integer> fuelPumpsQueue = new ArrayDeque<>(pumpsCount);
