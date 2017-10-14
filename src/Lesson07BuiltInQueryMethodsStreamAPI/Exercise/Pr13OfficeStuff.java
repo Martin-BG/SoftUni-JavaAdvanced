@@ -24,7 +24,7 @@ public class Pr13OfficeStuff {
             companiesData.get(data[0]).put(data[2], companiesData.get(data[0]).get(data[2]) + Integer.parseInt(data[1]));
         }
 
-        for (Map.Entry<String, Map<String, Integer>> mapEntry : companiesData.entrySet()) {
+        for (Map.Entry mapEntry : companiesData.entrySet()) {
             System.out.printf("%s: %s%n", mapEntry.getKey(),
                     mapEntry.getValue().toString()
                             .replaceAll("[{}]", "")
