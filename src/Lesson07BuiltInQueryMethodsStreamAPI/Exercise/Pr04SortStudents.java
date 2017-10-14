@@ -4,8 +4,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Comparator;
 
-public class Pr01StudentsByGroup {
+public class Pr04SortStudents {
 
     public static void main(String[] args) {
         final String dataFile = "src\\Lesson07BuiltInQueryMethodsStreamAPI\\Resources\\StudentData.txt";
@@ -14,9 +15,11 @@ public class Pr01StudentsByGroup {
             br.lines()
                     .skip(1)
                     .map(line -> line.split("\\s+"))
-                    .filter(x -> "2".equals(x[5]))
+                    .sorted(Comparator
+                            .comparing((String[] x) -> x[2])
+                            .thenComparing((x, y) -> y[1].compareTo(x[1]))
+                    )
                     .map(x -> x[1] + " " + x[2])
-                    .sorted()
                     .forEach(System.out::println);
         } catch (IOException e) {
             e.printStackTrace();

@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-public class Pr01StudentsByGroup {
+public class Pr02StudentsByFirstAndLastName {
 
     public static void main(String[] args) {
         final String dataFile = "src\\Lesson07BuiltInQueryMethodsStreamAPI\\Resources\\StudentData.txt";
@@ -14,10 +14,9 @@ public class Pr01StudentsByGroup {
             br.lines()
                     .skip(1)
                     .map(line -> line.split("\\s+"))
-                    .filter(x -> "2".equals(x[5]))
+                    .filter(x -> x[1].compareTo(x[2]) < 0)
                     .map(x -> x[1] + " " + x[2])
-                    .sorted()
-                    .forEach(System.out::println);
+                    .forEachOrdered(System.out::println);
         } catch (IOException e) {
             e.printStackTrace();
         }
