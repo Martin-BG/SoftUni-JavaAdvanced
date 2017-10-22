@@ -47,6 +47,7 @@ public class Pr04Highscore {
             input = reader.readLine();
         }
 
+//      players.values().stream().sorted(Comparator.reverseOrder()).forEachOrdered(System.out::print); //Slow
         Object[] sorted = players.values().toArray();
         Arrays.sort(sorted, Collections.reverseOrder());
 
