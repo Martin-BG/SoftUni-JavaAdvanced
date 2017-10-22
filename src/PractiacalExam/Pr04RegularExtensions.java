@@ -14,37 +14,10 @@ public class Pr04RegularExtensions {
 
             String input = reader.readLine();
             while (!"Print".equalsIgnoreCase(input)) {
-                input = input.replaceAll("%+", "%");
-
-                boolean addToStart = false;
-                boolean addToEnd = false;
-                if (input.startsWith("%")) {
-                    input = input.substring(1);
-                    addToStart = true;
-                }
-                if (input.endsWith("%")) {
-                    input = input.substring(0, input.length() - 1);
-                    addToEnd = true;
-                }
-                String[] parts = input.split("%");
+                Pattern pattern = Pattern.compile(getRegex(input));
+                Matcher matcher = pattern.matcher(text);
 
                 StringBuilder sb = new StringBuilder();
-                if (addToStart) {
-                    sb.append("\\S*");
-                }
-                for (int i = 0; i < parts.length - 1; i++) {
-                    sb.append(Pattern.quote(parts[i]));
-                    sb.append("\\S*");
-                }
-                sb.append(Pattern.quote(parts[parts.length - 1]));
-                if (addToEnd) {
-                    sb.append("\\S*");
-                }
-
-                Pattern pattern = Pattern.compile(sb.toString());
-                Matcher matcher = pattern.matcher(text);
-                sb = new StringBuilder();
-
                 int lastEndIndex = 0;
                 while (matcher.find()) {
                     int startIndex = matcher.start();
@@ -62,5 +35,42 @@ public class Pr04RegularExtensions {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private static String getRegex(String input) {
+        final String specialSymbolReplacement = "\\S*";
+        input = input.replaceAll("%+", "%");
+
+        boolean addToStart = false;
+        boolean addToEnd = false;
+
+        if (input.startsWith("%")) {
+            input = input.substring(1);
+            addToStart = true;
+        }
+
+        if (input.endsWith("%")) {
+            input = input.substring(0, input.length() - 1);
+            addToEnd = true;
+        }
+
+        String[] parts = input.split("%");
+        StringBuilder sb = new StringBuilder();
+
+        if (addToStart) {
+            sb.append(specialSymbolReplacement);
+        }
+
+        for (int i = 0; i < parts.length - 1; i++) {
+            sb.append(Pattern.quote(parts[i]));
+            sb.append(specialSymbolReplacement);
+        }
+        sb.append(Pattern.quote(parts[parts.length - 1]));
+
+        if (addToEnd) {
+            sb.append(specialSymbolReplacement);
+        }
+
+        return sb.toString();
     }
 }
