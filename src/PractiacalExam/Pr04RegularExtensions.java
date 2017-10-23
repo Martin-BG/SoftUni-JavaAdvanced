@@ -17,16 +17,9 @@ public class Pr04RegularExtensions {
                 Pattern pattern = Pattern.compile(getRegex(input));
                 Matcher matcher = pattern.matcher(text);
 
-                StringBuilder sb = new StringBuilder();
-                int lastEndIndex = 0;
                 while (matcher.find()) {
-                    int startIndex = matcher.start();
-                    sb.append(text.substring(lastEndIndex, startIndex));
-                    sb.append(new StringBuilder(matcher.group()).reverse());
-                    lastEndIndex = matcher.end();
+                    text = text.replace(matcher.group(), new StringBuilder(matcher.group()).reverse().toString());
                 }
-                sb.append(text.substring(lastEndIndex, text.length()));
-                text = sb.toString();
 
                 input = reader.readLine();
             }
