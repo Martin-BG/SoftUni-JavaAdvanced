@@ -17,9 +17,30 @@ public class Pr04RegularExtensions {
                 Pattern pattern = Pattern.compile(getRegex(input));
                 Matcher matcher = pattern.matcher(text);
 
+                // Solution 1
+                StringBuffer stringBuffer = new StringBuffer();
                 while (matcher.find()) {
-                    text = text.replace(matcher.group(), new StringBuilder(matcher.group()).reverse().toString());
+                    matcher.appendReplacement(stringBuffer, Matcher.quoteReplacement(new StringBuilder(matcher.group()).reverse().toString()));
                 }
+                matcher.appendTail(stringBuffer);
+                text = stringBuffer.toString();
+
+//                // Solution 2
+//                StringBuilder sb = new StringBuilder();
+//                int lastEndIndex = 0;
+//                while (matcher.find()) {
+//                    int startIndex = matcher.start();
+//                    sb.append(text.substring(lastEndIndex, startIndex));
+//                    sb.append(new StringBuilder(matcher.group()).reverse());
+//                    lastEndIndex = matcher.end();
+//                }
+//                sb.append(text.substring(lastEndIndex, text.length()));
+//                text = sb.toString();
+
+//                // Judge pass solution
+//                while (matcher.find()) {
+//                    text = text.replace(matcher.group(), new StringBuilder(matcher.group()).reverse().toString());
+//                }
 
                 input = reader.readLine();
             }
