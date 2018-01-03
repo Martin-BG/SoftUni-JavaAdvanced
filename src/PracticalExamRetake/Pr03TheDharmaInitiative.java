@@ -117,18 +117,18 @@ public class Pr03TheDharmaInitiative {
             if (this == o) {
                 return true;
             }
-            if (o == null || getClass() != o.getClass()) {
+            if (o == null || this.getClass() != o.getClass()) {
                 return false;
             }
 
             Recruit recruit = (Recruit) o;
 
-            return id == recruit.id && name.equals(recruit.name);
+            return this.id == recruit.id && name.equals(recruit.name);
         }
 
         @Override
         public int hashCode() {
-            return (int) (id ^ (id >>> 32));
+            return (int) (this.id ^ (this.id >>> 32));
         }
     }
 }
