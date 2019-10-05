@@ -5,12 +5,16 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Pr02SpaceStationEstablishment {
 
-    private static final int REQUIRED_STAR_POWER = 50;
-
     public static void main(String[] args) throws IOException {
+        Engine engine = initEngine();
+        engine.start();
+    }
+
+    private static Engine initEngine() throws IOException {
         final BufferedReader reader = new BufferedReader(new InputStreamReader(System.in, StandardCharsets.UTF_8));
 
         int universeSize = Integer.parseInt(reader.readLine());
@@ -20,13 +24,13 @@ public class Pr02SpaceStationEstablishment {
         parseUniverse(reader, universeSize, spaceship, objects);
 
         Universe universe = new Universe(universeSize, objects);
-        Engine engine = new Engine(spaceship, universe, reader);
-
-        engine.start();
+        return new Engine(spaceship, universe, reader);
     }
 
-    private static void parseUniverse(final BufferedReader reader, int universeSize,
-                                      final Spaceship spaceship, final List<Visitable> objects) throws IOException {
+    private static void parseUniverse(final BufferedReader reader,
+                                      int universeSize,
+                                      final Spaceship spaceship,
+                                      final List<Visitable> objects) throws IOException {
         BlackHole firstBlackHole = null;
         for (int row = 0; row < universeSize; row++) {
             char[] chars = reader.readLine().trim().toUpperCase().toCharArray();
@@ -132,21 +136,21 @@ public class Pr02SpaceStationEstablishment {
     }
 
     private static class Universe {
-        private final Set<? extends Visitable> objects;
+        private final Map<? super Pointable, ? extends Visitable> objects;
         private final int size;
 
         public Universe(int size, Collection<? extends Visitable> objects) {
             this.size = size;
-            this.objects = new HashSet<>(objects);
+            this.objects = objects.stream()
+                    .collect(Collectors.toMap(Actor::getCoordinate, o -> o));
         }
 
         public void tick(Spaceship spaceship) {
-            objects.stream()
-                    .filter(v -> v.getCoordinate().equals(spaceship.getCoordinate()))
-                    .findFirst()
-                    .ifPresent(v -> v.visit(spaceship));
-
-            objects.removeIf(Visitable::isVisited);
+            objects.computeIfPresent(spaceship.getCoordinate(),
+                    (k, v) -> {
+                        v.visit(spaceship);
+                        return v;
+                    });
         }
 
         public String asString(Spaceship spaceship) {
@@ -157,7 +161,11 @@ public class Pr02SpaceStationEstablishment {
                 }
             }
 
-            objects.forEach(v -> setSymbol(map, v));
+            objects.forEach((k, v) -> {
+                if (!v.isVisited()) {
+                    setSymbol(map, v);
+                }
+            });
 
             if (!intoTheVoid(spaceship.getCoordinate())) {
                 setSymbol(map, spaceship);
@@ -232,7 +240,10 @@ public class Pr02SpaceStationEstablishment {
 
         @Override
         public void visit(Spaceship spaceship) {
-            spaceship.setCoordinate(coordinate);
+            if (visited) {
+                return;
+            }
+
             spaceship.addPower(power);
             visited = true;
         }
@@ -268,6 +279,10 @@ public class Pr02SpaceStationEstablishment {
 
         @Override
         public void visit(Spaceship spaceship) {
+            if (visited) {
+                return;
+            }
+
             spaceship.setCoordinate(exit.getCoordinate());
             exit.visited = true;
             visited = true;
@@ -290,6 +305,7 @@ public class Pr02SpaceStationEstablishment {
     }
 
     private static class Spaceship implements Actor {
+        private static final int REQUIRED_STAR_POWER = 50;
         private Coordinate coordinate;
         private int power;
 
