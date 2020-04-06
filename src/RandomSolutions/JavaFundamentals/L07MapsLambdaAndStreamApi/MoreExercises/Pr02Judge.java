@@ -27,14 +27,14 @@ public class Pr02Judge {
                 .thenComparing(Map.Entry.comparingByKey());
 
         contestsParticipants.forEach((contest, participants) -> {
-            System.out.printf("%s: %d participants\n", contest, participants.size());
+            System.out.printf("%s: %d participants%n", contest, participants.size());
             final int[] index = {0};
             participants.entrySet()
                     .stream()
                     .sorted(participantsComparator)
-                    .forEach(participant -> {
-                        System.out.printf("%d. %s <::> %d%n", ++index[0], participant.getKey(), participant.getValue());
-                    });
+                    .forEach(participant -> System.out.printf(
+                            "%d. %s <::> %d%n",
+                            ++index[0], participant.getKey(), participant.getValue()));
         });
 
         System.out.println("Individual standings:");
@@ -46,8 +46,8 @@ public class Pr02Judge {
                 .entrySet()
                 .stream()
                 .sorted(participantsComparator)
-                .forEach(participant -> {
-                    System.out.printf("%d. %s -> %d%n", ++index[0], participant.getKey(), participant.getValue());
-                });
+                .forEach(participant -> System.out.printf(
+                        "%d. %s -> %d%n",
+                        ++index[0], participant.getKey(), participant.getValue()));
     }
 }
