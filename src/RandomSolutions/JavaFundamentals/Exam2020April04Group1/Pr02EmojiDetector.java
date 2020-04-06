@@ -40,6 +40,6 @@ public class Pr02EmojiDetector {
                 "Cool threshold: %d%n%d emojis found in the text. The cool ones are:%n%s%n",
                 coolEmojisThreshold,
                 emojisFound,
-                coolEmojis.stream().collect(Collectors.joining(System.lineSeparator()))))
+                coolEmojis.stream().collect(Collectors.joining(System.lineSeparator())));
     }
 }
