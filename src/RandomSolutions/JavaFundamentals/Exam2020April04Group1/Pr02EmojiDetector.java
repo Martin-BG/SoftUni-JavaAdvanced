@@ -13,31 +13,33 @@ public class Pr02EmojiDetector {
 
         String input = scan.nextLine();
 
-        long threshold = input.chars()
+        long coolEmojisThreshold = input.chars()
                 .filter(Character::isDigit)
                 .mapToObj(Character::getNumericValue)
                 .map(Long::valueOf)
                 .reduce((a, b) -> a * b)
                 .orElse(0L);
 
-        Pattern pattern = Pattern.compile("(?<emoji>(?<symbols>[:]{2}|[*]{2})(?<name>[A-Z][a-z]{2,})\\k<symbols>)");
-        Matcher matcher = pattern.matcher(input);
+        Matcher emojiMatcher = Pattern
+                .compile("(?<emoji>(?<symbols>[:]{2}|[*]{2})(?<name>[A-Z][a-z]{2,})\\k<symbols>)")
+                .matcher(input);
 
-        int count = 0;
-        List<String> emojis = new ArrayList<>();
-        while (matcher.find()) {
-            count++;
-            matcher.group("name").chars()
+        int emojisFound = 0;
+        List<String> coolEmojis = new ArrayList<>();
+
+        while (emojiMatcher.find()) {
+            emojisFound++;
+            emojiMatcher.group("name").chars()
                     .mapToObj(Long::valueOf)
                     .reduce(Long::sum)
-                    .filter(current -> current.compareTo(threshold) >= 0)
-                    .ifPresent(sum -> emojis.add(matcher.group("emoji")));
+                    .filter(current -> current.compareTo(coolEmojisThreshold) >= 0)
+                    .ifPresent(sum -> coolEmojis.add(emojiMatcher.group("emoji")));
         }
 
         System.out.println(String.format(
                 "Cool threshold: %d%n%d emojis found in the text. The cool ones are:%n%s%n",
-                threshold,
-                count,
-                emojis.stream().collect(Collectors.joining(System.lineSeparator()))));
+                coolEmojisThreshold,
+                emojisFound,
+                coolEmojis.stream().collect(Collectors.joining(System.lineSeparator()))));
     }
 }
