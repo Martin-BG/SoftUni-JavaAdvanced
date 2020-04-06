@@ -1,6 +1,5 @@
 package RandomSolutions.JavaFundamentals.Exam2020April04Group1;
 
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -14,12 +13,12 @@ public class Pr02EmojiDetector {
 
         String input = scan.nextLine();
 
-        BigInteger threshold = input.chars()
+        long threshold = input.chars()
                 .filter(Character::isDigit)
                 .mapToObj(Character::getNumericValue)
-                .map(BigInteger::valueOf)
-                .reduce(BigInteger::multiply)
-                .orElse(BigInteger.ZERO);
+                .map(Long::valueOf)
+                .reduce((a, b) -> a * b)
+                .orElse(0L);
 
         Pattern pattern = Pattern.compile("(?<emoji>(?<symbols>[:]{2}|[*]{2})(?<name>[A-Z][a-z]{2,})\\k<symbols>)");
         Matcher matcher = pattern.matcher(input);
@@ -29,10 +28,10 @@ public class Pr02EmojiDetector {
         while (matcher.find()) {
             count++;
             matcher.group("name").chars()
-                    .mapToObj(BigInteger::valueOf)
-                    .reduce(BigInteger::add)
+                    .mapToObj(Long::valueOf)
+                    .reduce(Long::sum)
                     .filter(current -> current.compareTo(threshold) >= 0)
-                    .ifPresent(x -> emojis.add(matcher.group("emoji")));
+                    .ifPresent(sum -> emojis.add(matcher.group("emoji")));
         }
 
         System.out.println(String.format(
