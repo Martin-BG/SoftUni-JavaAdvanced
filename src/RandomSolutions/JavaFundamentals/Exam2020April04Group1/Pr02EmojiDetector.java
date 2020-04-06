@@ -36,10 +36,10 @@ public class Pr02EmojiDetector {
                     .ifPresent(sum -> coolEmojis.add(emojiMatcher.group("emoji")));
         }
 
-        System.out.println(String.format(
+        System.out.printf(
                 "Cool threshold: %d%n%d emojis found in the text. The cool ones are:%n%s%n",
                 coolEmojisThreshold,
                 emojisFound,
-                coolEmojis.stream().collect(Collectors.joining(System.lineSeparator()))));
+                coolEmojis.stream().collect(Collectors.joining(System.lineSeparator()))))
     }
 }
