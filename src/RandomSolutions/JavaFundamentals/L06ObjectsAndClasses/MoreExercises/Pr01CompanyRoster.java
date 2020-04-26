@@ -130,11 +130,9 @@ public class Pr01CompanyRoster {
 
         public void addEmployee(EmployeeData employeeData) {
             String departmentName = employeeData.getDepartment();
-            departments.putIfAbsent(departmentName, new Department(departmentName));
-            Department department = departments.get(departmentName);
-
+            Department department = departments.compute(departmentName,
+                    (name, dep) -> Objects.requireNonNullElseGet(dep, () -> new Department(departmentName)));
             Employee employee = new Employee(employeeData, department);
-
             department.addEmployee(employee);
         }
 
