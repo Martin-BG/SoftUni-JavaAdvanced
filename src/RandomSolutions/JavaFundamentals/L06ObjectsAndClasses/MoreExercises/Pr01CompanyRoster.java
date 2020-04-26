@@ -21,35 +21,57 @@ public class Pr01CompanyRoster {
                 .map(EmployeeData::fromString)
                 .forEach(company::addEmployee);
 
-        Comparator<Department> departmentByHighestAverageSalaryCmp = Comparator
-                .comparingDouble(Department::averageSalary)
-                .reversed();
-
-        Comparator<Employee> employeeByHighestSalaryCmp = Comparator
-                .comparingDouble(Employee::getSalary)
-                .reversed();
-
-        String departmentInfo = company
-                .firstDepartmentBy(departmentByHighestAverageSalaryCmp)
-                .map(departmentInfo("Highest Average Salary: ", employeeByHighestSalaryCmp))
-                .orElseThrow(() -> new IllegalStateException("Empty company"));
-
-        System.out.println(departmentInfo);
+        System.out.println(HighestAverageSalary.REPORT.forCompany(company));
     }
 
-    private static Function<Department, String> departmentInfo(String header,
-                                                               Comparator<? super Employee> employeeComparator) {
-        return department -> header + department.getName() + System.lineSeparator() +
-                department.employees().stream()
-                        .sorted(employeeComparator)
-                        .map(Pr01CompanyRoster::employeeToString)
-                        .collect(Collectors.joining(System.lineSeparator()));
+    private enum HighestAverageSalary implements DepartmentReport {
+        REPORT;
+
+        @Override
+        public Comparator<Department> departmentBy() {
+            return Comparator
+                    .comparingDouble((Department department) ->
+                            department.employees()
+                                    .stream()
+                                    .mapToDouble(Employee::getSalary)
+                                    .average()
+                                    .orElse(0.0))
+                    .reversed();
+        }
+
+        @Override
+        public Function<Department, String> departmentHeader() {
+            return department -> "Highest Average Salary: " + department.getName();
+        }
     }
 
-    private static String employeeToString(Employee employee) {
-        return String.format("%s %.2f %s %d",
-                employee.getName(), employee.getSalary(),
-                employee.getEmail(), employee.getAge());
+    interface DepartmentReport {
+
+        default String forCompany(Company company) {
+            return company.firstDepartmentBy(departmentBy())
+                    .map(department -> departmentHeader().apply(department) + System.lineSeparator() +
+                            department.employees().stream()
+                                    .sorted(employeesBy())
+                                    .map(employeeInfo())
+                                    .collect(Collectors.joining(System.lineSeparator())))
+                    .orElseThrow(() -> new IllegalStateException("Empty company"));
+        }
+
+        Comparator<Department> departmentBy();
+
+        Function<Department, String> departmentHeader();
+
+        default Comparator<Employee> employeesBy() {
+            return Comparator
+                    .comparingDouble(Employee::getSalary)
+                    .reversed();
+        }
+
+        default Function<Employee, String> employeeInfo() {
+            return employee -> String.format("%s %.2f %s %d",
+                    employee.getName(), employee.getSalary(),
+                    employee.getEmail(), employee.getAge());
+        }
     }
 
     private static final class EmployeeData {
@@ -130,8 +152,8 @@ public class Pr01CompanyRoster {
 
         public void addEmployee(EmployeeData employeeData) {
             String departmentName = employeeData.getDepartment();
-            Department department = departments.compute(departmentName,
-                    (name, dep) -> Objects.requireNonNullElseGet(dep, () -> new Department(departmentName)));
+            Department department = departments.computeIfAbsent(departmentName,
+                    (none) -> new Department(departmentName));
             Employee employee = new Employee(employeeData, department);
             department.addEmployee(employee);
         }
@@ -190,13 +212,6 @@ public class Pr01CompanyRoster {
 
         public void addEmployee(Employee employee) {
             employees.add(employee);
-        }
-
-        public double averageSalary() {
-            return employees.stream()
-                    .mapToDouble(employee -> employee.salary)
-                    .average()
-                    .orElse(0.0);
         }
 
         public Collection<Employee> employees() {
