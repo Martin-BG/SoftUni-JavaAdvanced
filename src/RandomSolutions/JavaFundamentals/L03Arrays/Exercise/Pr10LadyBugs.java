@@ -18,7 +18,6 @@ public class Pr10LadyBugs {
         BufferedReader reader = new BufferedReader(
                 new InputStreamReader(System.in, StandardCharsets.UTF_8));
 
-
         int fieldSize = Integer.parseInt(reader.readLine());
         int[] field = new int[fieldSize];
 
