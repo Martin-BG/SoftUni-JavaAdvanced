@@ -22,7 +22,6 @@ public class Pr10LadyBugs {
         int fieldSize = Integer.parseInt(reader.readLine());
         int[] field = new int[fieldSize];
 
-
         reader.lines()
                 .limit(1L)
                 .flatMapToInt(ladyBugIndexes -> SPACES_PATTERN
@@ -31,7 +30,7 @@ public class Pr10LadyBugs {
                 .filter(index -> index >= 0 && index < fieldSize)
                 .forEach(ladyBugIndex -> field[ladyBugIndex] = 1);
 
-        Consumer<String> ladyBugCommandExecutor = ladyBugCommandExecutor(field);
+        Consumer<String> ladyBugCommandExecutor = ladyBugCommandConsumer(field);
 
         reader.lines()
                 .takeWhile(line -> !"end".equals(line))
@@ -42,7 +41,7 @@ public class Pr10LadyBugs {
                 .replaceAll(""));
     }
 
-    private static Consumer<String> ladyBugCommandExecutor(int[] field) {
+    private static Consumer<String> ladyBugCommandConsumer(int[] field) {
         int fieldSize = field.length;
 
         return command -> {
