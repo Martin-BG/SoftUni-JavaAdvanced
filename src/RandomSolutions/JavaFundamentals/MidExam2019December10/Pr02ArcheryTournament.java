@@ -64,7 +64,7 @@ public class Pr02ArcheryTournament {
 
     private static int shootAtTarget(List<Integer> targets,
                                      String direction, int startIndex, int length) {
-        int shooterPoints = 0;
+        int pointsScored = 0;
 
         if (startIndex >= 0 && startIndex < targets.size()) {
             length %= targets.size();
@@ -74,11 +74,11 @@ public class Pr02ArcheryTournament {
             int targetIndex = (startIndex + offset) % targets.size();
 
             Integer targetPoints = targets.get(targetIndex);
-            shooterPoints = Math.min(5, targetPoints);
-            targetPoints = Math.max(0, targetPoints - 5);
+            pointsScored = Math.min(5, targetPoints);
+            targetPoints -= pointsScored;
             targets.set(targetIndex, targetPoints);
         }
 
-        return shooterPoints;
+        return pointsScored;
     }
 }
