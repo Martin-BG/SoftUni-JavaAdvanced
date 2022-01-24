@@ -13,22 +13,22 @@ public class Pr06WinningTicket {
 
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
-        String[] tickets = SEPARATOR.split(scan.nextLine().trim());
+        SEPARATOR.splitAsStream(scan.nextLine().trim())
+                .map(ticket -> {
+                    if (ticket.length() != 20) {
+                        return "invalid ticket";
+                    }
 
-        for (String ticket : tickets) {
-            if (ticket.length() != 20) {
-                System.out.println("invalid ticket");
-            } else {
-                Matcher matcher = PATTERN.matcher(ticket);
-                if (matcher.matches()) {
-                    String match = matcher.group("match");
-                    System.out.printf("ticket \"%s\" - %d%s%s%n",
-                            ticket, match.length(), match.charAt(0),
-                            (match.length() == 10) ? " Jackpot!" : "");
-                } else {
-                    System.out.printf("ticket \"%s\" - no match%n", ticket);
-                }
-            }
-        }
+                    Matcher matcher = PATTERN.matcher(ticket);
+                    if (matcher.matches()) {
+                        String match = matcher.group("match");
+                        return String.format("ticket \"%s\" - %d%s%s",
+                                ticket, match.length(), match.charAt(0),
+                                (match.length() == 10) ? " Jackpot!" : "");
+                    }
+
+                    return String.format("ticket \"%s\" - no match", ticket);
+                })
+                .forEach(System.out::println);
     }
 }
